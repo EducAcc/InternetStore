@@ -1,0 +1,200 @@
+﻿<UserControl x:Class="EdPr.Views.AdminMenuControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:EdPr.Views"
+             xmlns:viewModels="clr-namespace:EdPr.ViewModels"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800"
+             MinWidth="1080">
+    <UserControl.Resources>
+        <DataTemplate DataType="{x:Type viewModels:AdminAddEmployeeViewModel}">
+            <local:AdminAddEmployeeControl/>
+        </DataTemplate>
+    </UserControl.Resources>
+
+    <materialDesign:Card>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <TextBlock Text="Админ панель" Grid.Row="0" Margin="0 0 0 15"
+                       Style="{StaticResource MaterialDesignHeadline6TextBlock}"/>
+
+            <TabControl Grid.Row="1"
+                        materialDesign:TransitionAssist.DisableTransitions="True" Background="Green">
+
+
+                <TabItem Header="Товары и категории">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1.5*"/>
+                            <ColumnDefinition Width="20"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <Grid Grid.Row="1" Grid.Column="0" ClipToBounds="True">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <Grid Grid.Row="0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+
+                                <Label Grid.Row="0" Content="Товары"/>
+
+                                <DataGrid Grid.Row="1"
+                                          ItemsSource="{Binding Goods}"
+                                          AutoGenerateColumns="False" 
+                                          IsReadOnly="True" 
+                                          SelectedItem="{Binding SelectedGood, UpdateSourceTrigger=PropertyChanged}">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Header="Название"   Binding="{Binding Name}"/>
+                                        <DataGridTextColumn Header="Категория"  Binding="{Binding GoodCategory.Name}"/>
+                                        <DataGridTextColumn Header="Цена"       Binding="{Binding Price}"/>
+                                        <DataGridTextColumn Header="Количество" Binding="{Binding Quantity}"/>
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                            </Grid>
+
+                            <StackPanel Grid.Row="1">
+                                <Label Content="Создание категории" Margin="0 15 0 0"/>
+
+                                <StackPanel Orientation="Horizontal" Margin="0 5 0 5">
+                                    <TextBox Text="{Binding NewCategoryName, UpdateSourceTrigger=PropertyChanged}" 
+                                             materialDesign:HintAssist.Hint="Название категории" 
+                                             MinWidth="250"
+                                             Margin="0 0 15 0"
+                                             VerticalAlignment="Center"/>
+                                    <Button Content="Добавить категорию" 
+                                            Command="{Binding CreateCategoryCommand}"
+                                            VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </Grid>
+
+                        <StackPanel Grid.Row="1" Grid.Column="2" Margin="20">
+                            <Label Content="Наименование"/>
+                            <TextBox Text="{Binding SelectedGood.Name, UpdateSourceTrigger=PropertyChanged}"/>
+                            <Label Content="Категория"/>
+                            <ComboBox SelectedItem="{Binding SelectedGood.GoodCategory}"
+                                      DisplayMemberPath="Name"
+                                      ItemsSource="{Binding Categories}"/>
+                            <Label Content="Цена"/>
+                            <materialDesign:DecimalUpDown Value="{Binding SelectedGood.Price, UpdateSourceTrigger=PropertyChanged}"
+                                                          Minimum="0"/>
+                            <Label Content="Количество"/>
+                            <materialDesign:NumericUpDown Value="{Binding SelectedGood.Quantity, UpdateSourceTrigger=PropertyChanged}"
+                                                          Minimum="0"/>
+                            <Grid Margin="0 20 0 0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="20"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Button Content="Сохранить" Grid.Column="0" Command="{Binding SaveGoodCommand}"/>
+                                <Button Content="Добавить"  Grid.Column="2" Command="{Binding AddGoodCommand}"/>
+                            </Grid>
+                        </StackPanel>
+                    </Grid>
+                </TabItem>
+
+                <TabItem Header="Сотрудники">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1.5*"/>
+                            <ColumnDefinition Width="20"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <Grid Grid.Row="1" Grid.Column="0" ClipToBounds="True">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <Grid Grid.Row="0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+
+                                <Label Grid.Row="0" Content="Пользователи"/>
+
+                                <DataGrid Grid.Row="1"
+                                    ItemsSource="{Binding Users}"
+                                    AutoGenerateColumns="False"
+                                    IsReadOnly="True"
+                                    SelectedItem="{Binding SelectedEmployee, UpdateSourceTrigger=PropertyChanged}">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Header="Фамилия"      Binding="{Binding Surname}"/>
+                                        <DataGridTextColumn Header="Имя"          Binding="{Binding Name}"/>
+                                        <DataGridTextColumn Header="Отчество"     Binding="{Binding Patronymic}"/>
+                                        <DataGridTextColumn Header="Почта"        Binding="{Binding Email}"/>
+                                        <DataGridTextColumn Header="Паспорт"      Binding="{Binding Passport}"/>
+                                        <DataGridTextColumn Header="Логин"        Binding="{Binding Login}"/>
+                                        <DataGridTextColumn Header="Должность"    Binding="{Binding EmployeeOccupation.Name}"/>
+                                        <DataGridTextColumn Header="Подразделение" Binding="{Binding Subdivision.Name}"/>
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                            </Grid>
+
+                            <StackPanel Grid.Row="1">
+                                <Label Content="Журнал входа" Margin="0 15 0 0"/>
+
+                                <StackPanel Orientation="Horizontal" Margin="0 0 0 5">
+                                    <TextBox Text="{Binding EmployeeSearchInput, UpdateSourceTrigger=PropertyChanged}"
+                                             materialDesign:HintAssist.Hint="Поиск"/>
+                                    <ComboBox SelectedItem="{Binding FilteredEmployee}" 
+                                              ItemsSource="{Binding Users}"
+                                              DisplayMemberPath="FullName"
+                                              materialDesign:HintAssist.Hint="Выберите сотрудника"
+                                              Margin="10 0 20 -7"/>
+                                    <DatePicker SelectedDate="{Binding StartDate}"
+                                                DisplayDateStart="{Binding StartDateBorder, Mode=OneWay}"
+                                                DisplayDateEnd="{Binding EndDateBorder, Mode=OneWay}"
+                                                materialDesign:HintAssist.Hint="От"
+                                                Margin="0 0 10 0"/>
+                                    <DatePicker SelectedDate="{Binding EndDate}" 
+                                                DisplayDateStart="{Binding StartDateBorder, Mode=OneWay}"
+                                                DisplayDateEnd="{Binding EndDateBorder, Mode=OneWay}"
+                                                materialDesign:HintAssist.Hint="До"/>
+                                    <Button Content="Сбросить фильтр" Margin="15 0 0 0" FontSize="10"
+                                            Command="{Binding VipeFilterCommand}"/>
+                                </StackPanel>
+
+                                <DataGrid ItemsSource="{Binding Logs}" MaxHeight="200"
+                                          AutoGenerateColumns="False" IsReadOnly="True"
+                                          CanUserAddRows="False">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Header="Логин" Binding="{Binding User.Login}"/>
+                                        <DataGridTextColumn Header="Дата"  Binding="{Binding DateTime}"/>
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                            </StackPanel>
+                        </Grid>
+
+                        <Grid Grid.Row="1" Grid.Column="2">
+                            <ContentControl Content="{Binding SideWindow}"/>
+                        </Grid>
+                    </Grid>
+                </TabItem>
+            </TabControl>
+        </Grid>
+    </materialDesign:Card>
+</UserControl>

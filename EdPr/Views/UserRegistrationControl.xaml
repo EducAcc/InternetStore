@@ -1,0 +1,30 @@
+﻿<UserControl x:Class="EdPr.Views.UserRegistrationControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:EdPr.Views"
+             xmlns:vw="clr-namespace:EdPr.ViewModels"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <DataTemplate DataType="{x:Type vw:UserProfileViewModel}">
+            <local:UserProfileControl/>
+        </DataTemplate>
+    </UserControl.Resources>
+    
+    <materialDesign:Card Padding="16">
+        <StackPanel>
+            <Grid>
+                <TextBlock Text="Регистрация" Style="{StaticResource MaterialDesignHeadline6TextBlock}"
+                           Margin="0 0 0 15" HorizontalAlignment="Left"/>
+                <Button Content="Войти" HorizontalAlignment="Right"
+                        Command="{Binding LoginCommand}"/>
+            </Grid>
+            <ContentControl Content="{Binding UserProfileVM}"/>
+
+            <Button Content="Зарегистрироваться" Command="{Binding RegisterCommand}" Margin="0 20 0 0"/>
+        </StackPanel>
+    </materialDesign:Card>
+</UserControl>

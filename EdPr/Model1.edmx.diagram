@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="44b274bdec5a4d308a3dd87fb1f61b9c" Name="Diagram1" ZoomLevel="97">
+        <EntityTypeShape EntityType="EdPrModel.Account" Width="1.5" PointX="0.75" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="EdPrModel.EmployeeOccupation" Width="1.5" PointX="0.75" PointY="6.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="EdPrModel.Log" Width="1.5" PointX="5.25" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EdPrModel.Subdivision" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EdPrModel.User" Width="1.5" PointX="3.25" PointY="3" />
+        <AssociationConnector Association="EdPrModel.FK_User_Account" />
+        <AssociationConnector Association="EdPrModel.FK_User_UserOccupation" />
+        <AssociationConnector Association="EdPrModel.FK_Log_Employee" />
+        <AssociationConnector Association="EdPrModel.FK_User_Subdivision" />
+        <EntityTypeShape EntityType="EdPrModel.Address" Width="1.5" PointX="6.125" PointY="6.5" />
+        <AssociationConnector Association="EdPrModel.FK_User_Address" />
+        <EntityTypeShape EntityType="EdPrModel.GoodCategory" Width="1.5" PointX="7.375" PointY="1.25" />
+        <EntityTypeShape EntityType="EdPrModel.Good" Width="1.5" PointX="9.625" PointY="0.875" />
+        <AssociationConnector Association="EdPrModel.FK_Good_GoodCategory" />
+        <EntityTypeShape EntityType="EdPrModel.GoodsCart" Width="1.5" PointX="8.5" PointY="5.375" />
+        <EntityTypeShape EntityType="EdPrModel.UserCart" Width="1.5" PointX="4.375" PointY="9.125" />
+        <AssociationConnector Association="EdPrModel.FK_GoodsCart_Good" />
+        <AssociationConnector Association="EdPrModel.FK_GoodsCart_UserCart" />
+        <AssociationConnector Association="EdPrModel.PK_UserCart_User" />
+        <EntityTypeShape EntityType="EdPrModel.Request" Width="1.5" PointX="5.5" PointY="12.5" />
+        <EntityTypeShape EntityType="EdPrModel.RequestGood" Width="1.5" PointX="11.875" PointY="6.625" />
+        <AssociationConnector Association="EdPrModel.FK_RequestGoods_Good" />
+        <AssociationConnector Association="EdPrModel.FK_Request_User" />
+        <AssociationConnector Association="EdPrModel.FK_RequestGoods_Request" />
+        </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

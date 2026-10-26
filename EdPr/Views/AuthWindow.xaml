@@ -1,0 +1,40 @@
+﻿<Window x:Class="EdPr.Views.AuthWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:EdPr.Views"
+        xmlns:viewModels="clr-namespace:EdPr.ViewModels"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d"
+        Name="LoginWindow"
+        Title="Авторизация" MinHeight="270" SizeToContent="Height" Width="300">
+
+    <StackPanel Margin="20 10 20 10">
+        <Label Content="Авторизация" HorizontalAlignment="Center" FontSize="20" FontWeight="SemiBold" Margin="0 0 0 20"/>
+
+        <Label Content="Логин"/>
+        <TextBox Name="LoginField" 
+                 Text="{Binding Login, UpdateSourceTrigger=PropertyChanged}"/>
+        <Label Content="Пароль" Margin="0 5 0 0"/>
+
+        <PasswordBox x:Name="PasswordField"
+                     Style="{StaticResource MaterialDesignFloatingHintRevealPasswordBox}"
+                     materialDesign:HintAssist.Hint="Введите пароль"
+                     materialDesign:PasswordBoxAssist.Password="{Binding Password, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                     materialDesign:TextFieldAssist.HasClearButton="True"
+                     Margin="0 0 0 0"/>
+
+        <Button Content="Войти" 
+                IsDefault="True"
+                Command="{Binding LoginCommand}"
+                CommandParameter="{Binding ElementName=LoginWindow}"
+                Margin="0 20 0 0" Padding="0 8"/>
+
+        <Button Content="Нет аккаунта?" HorizontalAlignment="Center" 
+                FontStyle="Italic" Foreground="Teal" Background="Transparent"
+                BorderBrush="Transparent"
+                Command="{Binding GoToRegistrationCommand}"
+                CommandParameter="{Binding ElementName=LoginWindow}"/>
+    </StackPanel> 
+</Window>

@@ -1,0 +1,822 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Хранилище EdPrModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Account">
+          <Key>
+            <PropertyRef Name="Login" />
+          </Key>
+          <Property Name="Login" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="Address">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Street" Type="nvarchar" MaxLength="255" />
+          <Property Name="House" Type="nvarchar" MaxLength="2" />
+          <Property Name="Entrance" Type="int" />
+          <Property Name="Room" Type="int" />
+          <Property Name="Floor" Type="int" />
+        </EntityType>
+        <EntityType Name="EmployeeOccupation">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Good">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="CategoryId" Type="int" Nullable="false" />
+          <Property Name="Price" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Quantity" Type="int" />
+          <Property Name="Image" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="GoodCategory">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="GoodsCart">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Good" Type="int" />
+          <Property Name="Quantitty" Type="int" />
+          <Property Name="CartId" Type="int" />
+        </EntityType>
+        <EntityType Name="Log">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmployeeId" Type="int" />
+          <Property Name="DateTime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Request">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ClientId" Type="int" />
+          <Property Name="Date" Type="date" />
+          <Property Name="Total" Type="decimal" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityType Name="RequestGoods">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RequestId" Type="int" />
+          <Property Name="GoodId" Type="int" />
+          <Property Name="Quantity" Type="int" />
+        </EntityType>
+        <EntityType Name="Subdivision">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Surname" Type="nvarchar" MaxLength="50" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Patronymic" Type="nvarchar" MaxLength="50" />
+          <Property Name="Passport" Type="nvarchar" MaxLength="11" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="11" />
+          <Property Name="Birthday" Type="date" />
+          <Property Name="Gender" Type="bit" />
+          <Property Name="Email" Type="nvarchar" MaxLength="70" />
+          <Property Name="Photo" Type="varbinary(max)" />
+          <Property Name="AddressId" Type="int" />
+          <Property Name="Occupation" Type="int" />
+          <Property Name="Login" Type="nvarchar" MaxLength="50" />
+          <Property Name="SubdivisionId" Type="int" />
+        </EntityType>
+        <EntityType Name="UserCart">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="Total" Type="decimal" Precision="18" Scale="2" />
+        </EntityType>
+        <Association Name="FK_Good_GoodCategory">
+          <End Role="GoodCategory" Type="Self.GoodCategory" Multiplicity="1" />
+          <End Role="Good" Type="Self.Good" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GoodCategory">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Good">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GoodsCart_Good">
+          <End Role="Good" Type="Self.Good" Multiplicity="0..1" />
+          <End Role="GoodsCart" Type="Self.GoodsCart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Good">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="GoodsCart">
+              <PropertyRef Name="Good" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GoodsCart_UserCart">
+          <End Role="UserCart" Type="Self.UserCart" Multiplicity="0..1" />
+          <End Role="GoodsCart" Type="Self.GoodsCart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserCart">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="GoodsCart">
+              <PropertyRef Name="CartId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Log_Employee">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Log" Type="Self.Log" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Log">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Request_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Request" Type="Self.Request" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Request">
+              <PropertyRef Name="ClientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RequestGoods_Good">
+          <End Role="Good" Type="Self.Good" Multiplicity="0..1" />
+          <End Role="RequestGoods" Type="Self.RequestGoods" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Good">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RequestGoods">
+              <PropertyRef Name="GoodId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RequestGoods_Request">
+          <End Role="Request" Type="Self.Request" Multiplicity="0..1" />
+          <End Role="RequestGoods" Type="Self.RequestGoods" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Request">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RequestGoods">
+              <PropertyRef Name="RequestId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Account">
+          <End Role="Account" Type="Self.Account" Multiplicity="0..1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="Login" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="Login" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Address">
+          <End Role="Address" Type="Self.Address" Multiplicity="0..1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Address">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="AddressId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Subdivision">
+          <End Role="Subdivision" Type="Self.Subdivision" Multiplicity="0..1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subdivision">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="SubdivisionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_UserOccupation">
+          <End Role="EmployeeOccupation" Type="Self.EmployeeOccupation" Multiplicity="0..1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EmployeeOccupation">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="Occupation" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PK_UserCart_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="UserCart" Type="Self.UserCart" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserCart">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище EdPrModelContainer">
+          <EntitySet Name="Account" EntityType="Self.Account" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Address" EntityType="Self.Address" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EmployeeOccupation" EntityType="Self.EmployeeOccupation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Good" EntityType="Self.Good" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GoodCategory" EntityType="Self.GoodCategory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GoodsCart" EntityType="Self.GoodsCart" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Log" EntityType="Self.Log" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Request" EntityType="Self.Request" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RequestGoods" EntityType="Self.RequestGoods" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Subdivision" EntityType="Self.Subdivision" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserCart" EntityType="Self.UserCart" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Good_GoodCategory" Association="Self.FK_Good_GoodCategory">
+            <End Role="GoodCategory" EntitySet="GoodCategory" />
+            <End Role="Good" EntitySet="Good" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GoodsCart_Good" Association="Self.FK_GoodsCart_Good">
+            <End Role="Good" EntitySet="Good" />
+            <End Role="GoodsCart" EntitySet="GoodsCart" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GoodsCart_UserCart" Association="Self.FK_GoodsCart_UserCart">
+            <End Role="UserCart" EntitySet="UserCart" />
+            <End Role="GoodsCart" EntitySet="GoodsCart" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Log_Employee" Association="Self.FK_Log_Employee">
+            <End Role="User" EntitySet="User" />
+            <End Role="Log" EntitySet="Log" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Request_User" Association="Self.FK_Request_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Request" EntitySet="Request" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RequestGoods_Good" Association="Self.FK_RequestGoods_Good">
+            <End Role="Good" EntitySet="Good" />
+            <End Role="RequestGoods" EntitySet="RequestGoods" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RequestGoods_Request" Association="Self.FK_RequestGoods_Request">
+            <End Role="Request" EntitySet="Request" />
+            <End Role="RequestGoods" EntitySet="RequestGoods" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Account" Association="Self.FK_User_Account">
+            <End Role="Account" EntitySet="Account" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Address" Association="Self.FK_User_Address">
+            <End Role="Address" EntitySet="Address" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Subdivision" Association="Self.FK_User_Subdivision">
+            <End Role="Subdivision" EntitySet="Subdivision" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_UserOccupation" Association="Self.FK_User_UserOccupation">
+            <End Role="EmployeeOccupation" EntitySet="EmployeeOccupation" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+          <AssociationSet Name="PK_UserCart_User" Association="Self.PK_UserCart_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="UserCart" EntitySet="UserCart" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="EdPrModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Account">
+          <Key>
+            <PropertyRef Name="Login" />
+          </Key>
+          <Property Name="Login" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Users" Relationship="EdPrModel.FK_User_Account" FromRole="Account" ToRole="User" />
+        </EntityType>
+        <EntityType Name="EmployeeOccupation">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Users" Relationship="EdPrModel.FK_User_UserOccupation" FromRole="EmployeeOccupation" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Log">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmployeeId" Type="Int32" />
+          <Property Name="DateTime" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="User" Relationship="EdPrModel.FK_Log_Employee" FromRole="Log" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Subdivision">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Users" Relationship="EdPrModel.FK_User_Subdivision" FromRole="Subdivision" ToRole="User" />
+        </EntityType>
+        <EntityContainer Name="EdPrEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Accounts" EntityType="Self.Account" />
+          <EntitySet Name="EmployeeOccupations" EntityType="Self.EmployeeOccupation" />
+          <EntitySet Name="Logs" EntityType="Self.Log" />
+          <EntitySet Name="Subdivisions" EntityType="Self.Subdivision" />
+          <EntitySet Name="Users" EntityType="EdPrModel.User" />
+          <AssociationSet Name="FK_User_Account" Association="EdPrModel.FK_User_Account">
+            <End Role="Account" EntitySet="Accounts" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_UserOccupation" Association="EdPrModel.FK_User_UserOccupation">
+            <End Role="EmployeeOccupation" EntitySet="EmployeeOccupations" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Log_Employee" Association="EdPrModel.FK_Log_Employee">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Log" EntitySet="Logs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Subdivision" Association="EdPrModel.FK_User_Subdivision">
+            <End Role="Subdivision" EntitySet="Subdivisions" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
+          <EntitySet Name="Addresses" EntityType="EdPrModel.Address" />
+          <AssociationSet Name="FK_User_Address" Association="EdPrModel.FK_User_Address">
+            <End Role="Address" EntitySet="Addresses" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
+          <EntitySet Name="GoodCategories" EntityType="EdPrModel.GoodCategory" />
+          <EntitySet Name="Goods" EntityType="EdPrModel.Good" />
+          <AssociationSet Name="FK_Good_GoodCategory" Association="EdPrModel.FK_Good_GoodCategory">
+            <End Role="GoodCategory" EntitySet="GoodCategories" />
+            <End Role="Good" EntitySet="Goods" />
+          </AssociationSet>
+          <EntitySet Name="GoodsCarts" EntityType="EdPrModel.GoodsCart" />
+          <EntitySet Name="UserCarts" EntityType="EdPrModel.UserCart" />
+          <AssociationSet Name="FK_GoodsCart_Good" Association="EdPrModel.FK_GoodsCart_Good">
+            <End Role="Good" EntitySet="Goods" />
+            <End Role="GoodsCart" EntitySet="GoodsCarts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GoodsCart_UserCart" Association="EdPrModel.FK_GoodsCart_UserCart">
+            <End Role="UserCart" EntitySet="UserCarts" />
+            <End Role="GoodsCart" EntitySet="GoodsCarts" />
+          </AssociationSet>
+          <AssociationSet Name="PK_UserCart_User" Association="EdPrModel.PK_UserCart_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="UserCart" EntitySet="UserCarts" />
+          </AssociationSet>
+          <EntitySet Name="Requests" EntityType="EdPrModel.Request" />
+          <EntitySet Name="RequestGoods" EntityType="EdPrModel.RequestGood" />
+          <AssociationSet Name="FK_RequestGoods_Good" Association="EdPrModel.FK_RequestGoods_Good">
+            <End Role="Good" EntitySet="Goods" />
+            <End Role="RequestGood" EntitySet="RequestGoods" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Request_User" Association="EdPrModel.FK_Request_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Request" EntitySet="Requests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RequestGoods_Request" Association="EdPrModel.FK_RequestGoods_Request">
+            <End Role="Request" EntitySet="Requests" />
+            <End Role="RequestGood" EntitySet="RequestGoods" />
+          </AssociationSet>
+          </EntityContainer>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Surname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Patronymic" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Passport" Type="String" MaxLength="11" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="String" MaxLength="11" FixedLength="false" Unicode="true" />
+          <Property Name="Birthday" Type="DateTime" Precision="0" />
+          <Property Name="Gender" Type="Boolean" />
+          <Property Name="Email" Type="String" MaxLength="70" FixedLength="false" Unicode="true" />
+          <Property Name="Photo" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="AddressId" Type="Int32" />
+          <Property Name="Occupation" Type="Int32" />
+          <Property Name="Login" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SubdivisionId" Type="Int32" />
+          <NavigationProperty Name="Account" Relationship="EdPrModel.FK_User_Account" FromRole="User" ToRole="Account" />
+          <NavigationProperty Name="EmployeeOccupation" Relationship="EdPrModel.FK_User_UserOccupation" FromRole="User" ToRole="EmployeeOccupation" />
+          <NavigationProperty Name="Logs" Relationship="EdPrModel.FK_Log_Employee" FromRole="User" ToRole="Log" />
+          <NavigationProperty Name="Subdivision" Relationship="EdPrModel.FK_User_Subdivision" FromRole="User" ToRole="Subdivision" />
+          <NavigationProperty Name="Address" Relationship="EdPrModel.FK_User_Address" FromRole="User" ToRole="Address" />
+          <NavigationProperty Name="UserCart" Relationship="EdPrModel.PK_UserCart_User" FromRole="User" ToRole="UserCart" />
+          <NavigationProperty Name="Requests" Relationship="EdPrModel.FK_Request_User" FromRole="User" ToRole="Request" />
+        </EntityType>
+        <Association Name="FK_User_Account">
+          <End Type="EdPrModel.Account" Role="Account" Multiplicity="0..1" />
+          <End Type="EdPrModel.User" Role="User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="Login" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="Login" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_UserOccupation">
+          <End Type="EdPrModel.EmployeeOccupation" Role="EmployeeOccupation" Multiplicity="0..1" />
+          <End Type="EdPrModel.User" Role="User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EmployeeOccupation">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="Occupation" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Log_Employee">
+          <End Type="EdPrModel.User" Role="User" Multiplicity="0..1" />
+          <End Type="EdPrModel.Log" Role="Log" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Log">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Subdivision">
+          <End Type="EdPrModel.Subdivision" Role="Subdivision" Multiplicity="0..1" />
+          <End Type="EdPrModel.User" Role="User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subdivision">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="SubdivisionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Address">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Street" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="House" Type="String" MaxLength="2" Unicode="true" FixedLength="false" />
+          <Property Name="Entrance" Type="Int32" />
+          <Property Name="Room" Type="Int32" />
+          <Property Name="Floor" Type="Int32" />
+          <NavigationProperty Name="Users" Relationship="EdPrModel.FK_User_Address" FromRole="Address" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_User_Address">
+          <End Type="EdPrModel.Address" Role="Address" Multiplicity="0..1" />
+          <End Type="EdPrModel.User" Role="User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Address">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="AddressId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="GoodCategory">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Goods" Relationship="EdPrModel.FK_Good_GoodCategory" FromRole="GoodCategory" ToRole="Good" />
+        </EntityType>
+        <EntityType Name="Good">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CategoryId" Type="Int32" Nullable="false" />
+          <Property Name="Price" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Quantity" Type="Int32" />
+          <Property Name="Image" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="GoodCategory" Relationship="EdPrModel.FK_Good_GoodCategory" FromRole="Good" ToRole="GoodCategory" />
+          <NavigationProperty Name="GoodsCarts" Relationship="EdPrModel.FK_GoodsCart_Good" FromRole="Good" ToRole="GoodsCart" />
+          <NavigationProperty Name="RequestGoods" Relationship="EdPrModel.FK_RequestGoods_Good" FromRole="Good" ToRole="RequestGood" />
+        </EntityType>
+        <Association Name="FK_Good_GoodCategory">
+          <End Type="EdPrModel.GoodCategory" Role="GoodCategory" Multiplicity="1" />
+          <End Type="EdPrModel.Good" Role="Good" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GoodCategory">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Good">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="GoodsCart">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GoodId" Type="Int32" />
+          <Property Name="Quantitty" Type="Int32" />
+          <Property Name="CartId" Type="Int32" />
+          <NavigationProperty Name="Good" Relationship="EdPrModel.FK_GoodsCart_Good" FromRole="GoodsCart" ToRole="Good" />
+          <NavigationProperty Name="UserCart" Relationship="EdPrModel.FK_GoodsCart_UserCart" FromRole="GoodsCart" ToRole="UserCart" />
+        </EntityType>
+        <EntityType Name="UserCart">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="Total" Type="Decimal" Precision="18" Scale="2" />
+          <NavigationProperty Name="GoodsCarts" Relationship="EdPrModel.FK_GoodsCart_UserCart" FromRole="UserCart" ToRole="GoodsCart" />
+          <NavigationProperty Name="User" Relationship="EdPrModel.PK_UserCart_User" FromRole="UserCart" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_GoodsCart_Good">
+          <End Type="EdPrModel.Good" Role="Good" Multiplicity="0..1" />
+          <End Type="EdPrModel.GoodsCart" Role="GoodsCart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Good">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="GoodsCart">
+              <PropertyRef Name="GoodId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GoodsCart_UserCart">
+          <End Type="EdPrModel.UserCart" Role="UserCart" Multiplicity="0..1" />
+          <End Type="EdPrModel.GoodsCart" Role="GoodsCart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserCart">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="GoodsCart">
+              <PropertyRef Name="CartId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PK_UserCart_User">
+          <End Type="EdPrModel.User" Role="User" Multiplicity="1" />
+          <End Type="EdPrModel.UserCart" Role="UserCart" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserCart">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Request">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ClientId" Type="Int32" />
+          <Property Name="Date" Type="DateTime" Precision="0" />
+          <Property Name="Total" Type="Decimal" Precision="18" Scale="2" />
+          <NavigationProperty Name="User" Relationship="EdPrModel.FK_Request_User" FromRole="Request" ToRole="User" />
+          <NavigationProperty Name="RequestGoods" Relationship="EdPrModel.FK_RequestGoods_Request" FromRole="Request" ToRole="RequestGood" />
+        </EntityType>
+        <EntityType Name="RequestGood">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RequestId" Type="Int32" />
+          <Property Name="GoodId" Type="Int32" />
+          <Property Name="Quantity" Type="Int32" />
+          <NavigationProperty Name="Good" Relationship="EdPrModel.FK_RequestGoods_Good" FromRole="RequestGood" ToRole="Good" />
+          <NavigationProperty Name="Request" Relationship="EdPrModel.FK_RequestGoods_Request" FromRole="RequestGood" ToRole="Request" />
+        </EntityType>
+        <Association Name="FK_RequestGoods_Good">
+          <End Type="EdPrModel.Good" Role="Good" Multiplicity="0..1" />
+          <End Type="EdPrModel.RequestGood" Role="RequestGood" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Good">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RequestGood">
+              <PropertyRef Name="GoodId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Request_User">
+          <End Type="EdPrModel.User" Role="User" Multiplicity="0..1" />
+          <End Type="EdPrModel.Request" Role="Request" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Request">
+              <PropertyRef Name="ClientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RequestGoods_Request">
+          <End Type="EdPrModel.Request" Role="Request" Multiplicity="0..1" />
+          <End Type="EdPrModel.RequestGood" Role="RequestGood" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Request">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RequestGood">
+              <PropertyRef Name="RequestId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище EdPrModelContainer" CdmEntityContainer="EdPrEntities">
+          <EntitySetMapping Name="Accounts">
+            <EntityTypeMapping TypeName="EdPrModel.Account">
+              <MappingFragment StoreEntitySet="Account">
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EmployeeOccupations">
+            <EntityTypeMapping TypeName="EdPrModel.EmployeeOccupation">
+              <MappingFragment StoreEntitySet="EmployeeOccupation">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Logs">
+            <EntityTypeMapping TypeName="EdPrModel.Log">
+              <MappingFragment StoreEntitySet="Log">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+                <ScalarProperty Name="DateTime" ColumnName="DateTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Subdivisions">
+            <EntityTypeMapping TypeName="EdPrModel.Subdivision">
+              <MappingFragment StoreEntitySet="Subdivision">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="EdPrModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="SubdivisionId" ColumnName="SubdivisionId" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="Occupation" ColumnName="Occupation" />
+                <ScalarProperty Name="AddressId" ColumnName="AddressId" />
+                <ScalarProperty Name="Photo" ColumnName="Photo" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="Birthday" ColumnName="Birthday" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Passport" ColumnName="Passport" />
+                <ScalarProperty Name="Patronymic" ColumnName="Patronymic" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Addresses">
+            <EntityTypeMapping TypeName="EdPrModel.Address">
+              <MappingFragment StoreEntitySet="Address">
+                <ScalarProperty Name="Floor" ColumnName="Floor" />
+                <ScalarProperty Name="Room" ColumnName="Room" />
+                <ScalarProperty Name="Entrance" ColumnName="Entrance" />
+                <ScalarProperty Name="House" ColumnName="House" />
+                <ScalarProperty Name="Street" ColumnName="Street" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GoodCategories">
+            <EntityTypeMapping TypeName="EdPrModel.GoodCategory">
+              <MappingFragment StoreEntitySet="GoodCategory">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Goods">
+            <EntityTypeMapping TypeName="EdPrModel.Good">
+              <MappingFragment StoreEntitySet="Good">
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GoodsCarts">
+            <EntityTypeMapping TypeName="EdPrModel.GoodsCart">
+              <MappingFragment StoreEntitySet="GoodsCart">
+                <ScalarProperty Name="CartId" ColumnName="CartId" />
+                <ScalarProperty Name="Quantitty" ColumnName="Quantitty" />
+                <ScalarProperty Name="GoodId" ColumnName="Good" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserCarts">
+            <EntityTypeMapping TypeName="EdPrModel.UserCart">
+              <MappingFragment StoreEntitySet="UserCart">
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Requests">
+            <EntityTypeMapping TypeName="EdPrModel.Request">
+              <MappingFragment StoreEntitySet="Request">
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="ClientId" ColumnName="ClientId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RequestGoods">
+            <EntityTypeMapping TypeName="EdPrModel.RequestGood">
+              <MappingFragment StoreEntitySet="RequestGoods">
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="GoodId" ColumnName="GoodId" />
+                <ScalarProperty Name="RequestId" ColumnName="RequestId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

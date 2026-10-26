@@ -1,0 +1,72 @@
+﻿<UserControl x:Class="EdPr.Views.CategoriesView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:EdPr.Views"
+             xmlns:vm="clr-namespace:EdPr.ViewModels"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d" 
+             d:DesignHeight="350" d:DesignWidth="400">
+
+    <UserControl.Resources>
+        <DataTemplate DataType="{x:Type vm:CatalogViewModel}">
+            <local:CatalogView/>
+        </DataTemplate>
+    </UserControl.Resources>
+
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Text="Главная" Grid.Row="0" Margin="0 0 0 15" Style="{StaticResource MaterialDesignHeadline6TextBlock}"/>
+
+        <Grid Grid.Row="1" Grid.Column="2">
+            <Button Background="Transparent" BorderThickness="0" Width="40" Height="40" Padding="0"
+                HorizontalAlignment="Right"
+                Command="{Binding OpenCartDialogCommand}">
+                <Grid>
+                    <Image Source="pack://application:,,,/Imgs/Сart.png"
+                    Stretch="Uniform"
+                    RenderOptions.BitmapScalingMode="HighQuality"/>
+
+                    <Border Background="LightSeaGreen" 
+                    CornerRadius="10" 
+                    MinWidth="18" 
+                    Height="18"
+                    Padding="3,0"
+                    HorizontalAlignment="center" 
+                    VerticalAlignment="Bottom">
+                        <TextBlock Text="{Binding GoodControl.CartTotal}" 
+                            Foreground="White"
+                            FontSize="10"
+                            FontWeight="Bold"
+                            HorizontalAlignment="Center" 
+                            VerticalAlignment="Center"/>
+                    </Border>
+                </Grid>
+            </Button>
+        </Grid>
+
+        <ComboBox SelectedItem="{Binding SelectedCategory}" Grid.Row="2"
+        ItemsSource="{Binding Categories}"
+        Grid.Column="1"
+        DisplayMemberPath="Name"
+        materialDesign:HintAssist.Hint="Выберите категорию"
+        HorizontalAlignment="Left"/>
+
+        <Grid Grid.Row="3" Grid.ColumnSpan="3">
+            <ContentControl Content="{Binding GoodControl}" Margin="0 15 0 15"/>
+        </Grid>
+    </Grid>
+</UserControl>
