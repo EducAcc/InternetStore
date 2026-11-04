@@ -85,3 +85,50 @@ BEGIN
         SELECT Appointment FROM deleted
     );
 END;
+```
+
+Триггер динамически пересчитывает поле Total в таблице Appointment на основе актуальной стоимости услуг из таблицы Service, обрабатывая как единичные операции, так и пакетные изменения данных.
+
+
+## Валидация данных и безопасность
+* **Валидация входных данных:** проверка логина и пароля на длину (от 4 символов) и допустимый алфавит (латиница), валидация формата мобильного номера телефона.
+* **Защита от дубликатов:** контроль уникальности учетных записей пользователей на этапе регистрации.
+* **Предупреждение деструктивных действий:** модальные окна подтверждения при удалении записей.
+* **Учет требований законодательства:** обработка персональных данных спроектирована с учетом положений ФЗ №152.
+
+## Интерфейс приложения
+
+### Гость
+
+Вкладка "Список услуг"
+<img width="2816" height="855" alt="image" src="https://github.com/user-attachments/assets/7c08b956-5963-4725-a3ce-367f1f9263a0" />
+Вкладка "Сотрудники"
+<img width="1388" height="854" alt="image" src="https://github.com/user-attachments/assets/1545bf27-9906-4d80-8a56-b428481b3cdd" />
+
+### Клиент
+
+Вкладка "Список услуг"
+<img width="1253" height="770" alt="image" src="https://github.com/user-attachments/assets/001e2c65-0a8f-42d1-929c-a8f5f9da2b59" />
+Вкладка "Личный кабинет"
+<img width="2595" height="770" alt="image" src="https://github.com/user-attachments/assets/c35c3490-980a-4f52-ac77-4b58d9a573fe" />
+Таблица питомцев
+<img width="1439" height="400" alt="image" src="https://github.com/user-attachments/assets/588a80ba-9323-4d40-bc38-2be8630bd308" />
+
+### Клиент
+
+Вкладка "Список услуг"
+<img width="1299" height="815" alt="image" src="https://github.com/user-attachments/assets/b735b636-244d-4d47-ab00-987c12df4b8d" />
+
+Вкладка "Сотрудники"
+<img width="1253" height="815" alt="image" src="https://github.com/user-attachments/assets/479d66df-3ebc-4958-b927-6f9b9db1155b" />
+
+
+## Физическая модель БД
+
+<img width="1739" height="1243" alt="image" src="https://github.com/user-attachments/assets/59de3f32-8a9b-49e4-9846-732206d94206" />
+
+## Диаграмма прецедентов
+
+<img width="1508" height="1242" alt="image" src="https://github.com/user-attachments/assets/29ab53dc-11ce-4364-be4d-1da8c29a4c15" />
+
+
