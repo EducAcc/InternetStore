@@ -114,13 +114,19 @@ END;
 Таблица питомцев
 <img width="1439" height="400" alt="image" src="https://github.com/user-attachments/assets/588a80ba-9323-4d40-bc38-2be8630bd308" />
 
-### Клиент
+### Администратор
 
 Вкладка "Список услуг"
 <img width="1299" height="815" alt="image" src="https://github.com/user-attachments/assets/b735b636-244d-4d47-ab00-987c12df4b8d" />
 
 Вкладка "Сотрудники"
 <img width="1253" height="815" alt="image" src="https://github.com/user-attachments/assets/479d66df-3ebc-4958-b927-6f9b9db1155b" />
+
+### Ветеринар
+
+Вкладка "Список услуг"
+<img width="1849" height="770" alt="image" src="https://github.com/user-attachments/assets/be152174-806e-4afb-ab8c-68cf370448ed" />
+
 
 
 ## Физическая модель БД
